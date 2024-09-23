@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Route, Routes, Link } from 'react-router-dom';
+import Home from './components/Home';
+import MyStats from './components/MyStats';
+import LogSteps from './components/LogSteps';
+import LogActivity from './components/LogActivity';
+import { StatsProvider } from './StatsContext';
 
 function App() {
+  const [activities, setActivities] = useState([]);
+
+  const updateActivities = (newActivities) => {
+    setActivities(newActivities);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StatsProvider>
+      <nav>
+        <div className="title">
+          <h1>ActForFitness</h1>
+        </div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/mystats">My Stats</Link></li>
+          <li><Link to="/logsteps">Log Steps</Link></li>
+          <li><Link to="/logactivity">Log Activity</Link></li>
+        </ul>
+      </nav>
+
+      <div>
+        <Routes>
+          <Route path="/" element={<Home activities={activities} />} />
+          <Route path="/mystats" element={<MyStats />} />
+          <Route path="/logsteps" element={<LogSteps />} />
+          <Route path="/logactivity" element={<LogActivity updateActivities={updateActivities} />} />
+        </Routes>
+      </div>
+    </StatsProvider>
   );
 }
 
