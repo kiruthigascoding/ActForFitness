@@ -8,34 +8,34 @@ const LogSteps = () => {
   const [caloriesBurned, setCaloriesBurned] = useState(0);
 
   const handleLogSteps = () => {
+
+    
+
     if (!stats || !stats.height) {
       console.error('Height is not available in stats');
       return;
     }
-
   
-    const strideLength = stats.height * 0.413; 
+    const strideLength = stats.height * 0.413;
     const distanceWalked = (steps * strideLength) / 100000;
-
-    
     const calories = steps * 0.04;
-
-    
-    setDistance(distanceWalked.toFixed(2)); 
-    setCaloriesBurned(calories.toFixed(2)); 
-
+  
+    setDistance(distanceWalked.toFixed(2));
+    setCaloriesBurned(calories.toFixed(2));
+  
+    const currentDate = new Date().toLocaleDateString();
   
     const loggedSteps = {
       id: Date.now(),
       steps: steps,
       distance: distanceWalked.toFixed(2),
       caloriesBurned: calories.toFixed(2),
-      date: new Date().toLocaleDateString(),
+      date: currentDate,
     };
-
     const existingLogs = JSON.parse(localStorage.getItem('loggedSteps')) || [];
-    existingLogs.push(loggedSteps);
-    localStorage.setItem('loggedSteps', JSON.stringify(existingLogs));
+    const todayLogs = existingLogs.filter(log => log.date === currentDate);
+    todayLogs.push(loggedSteps);
+    localStorage.setItem('loggedSteps', JSON.stringify([...existingLogs.filter(log => log.date !== currentDate), ...todayLogs]));
   };
 
   return (
