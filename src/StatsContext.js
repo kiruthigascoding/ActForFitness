@@ -5,18 +5,15 @@ export const StatsContext = createContext();
 export const StatsProvider = ({ children }) => {
   const [stats, setStats] = useState({
     name: '',
-    height: 0,
-    age: 0,
-    currentWeight: 0,
-    goalWeight: 0,
+    height: '',
+    age: '',
+    currentWeight: '',
+    goalWeight: '',
     startingWeight: 0,
   });
 
   const updateStats = (newStats) => {
-    setStats((prevStats) => ({
-      ...prevStats,
-      ...newStats,
-    }));
+    setStats(newStats);
   };
 
   return (

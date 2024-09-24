@@ -12,6 +12,7 @@ function App() {
   const updateActivities = (newActivities) => {
     setActivities(newActivities);
   };
+  
 
   return (
     <StatsProvider>
