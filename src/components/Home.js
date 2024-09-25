@@ -1,13 +1,9 @@
-import React, { useContext,useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProgressBar from './ProgressBar';
 import ActivityTable from './ActivityTable';
-import { StatsContext } from '../StatsContext';
-
 
 const Home = ({ stats }) => {
-  const { updateStats } = useContext(StatsContext);
-  
-   const [selectedDate, setSelectedDate] = useState(() => {
+  const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
       .toISOString()
@@ -21,17 +17,13 @@ const Home = ({ stats }) => {
 
   useEffect(() => {
     
-  
+    // Check if it's the user's first time launching the app
     const storedStats = JSON.parse(localStorage.getItem('userStats'));
     if (!storedStats || !storedStats.currentWeight) {
       setIsFirstLaunch(true);
-    } else {
-      updateStats(storedStats);
     }
 
-    
-
-    
+    // Fetch total steps for today
     const stepLogs = JSON.parse(localStorage.getItem('loggedSteps')) || [];
     const today = new Date().toLocaleDateString(undefined, {
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone 
@@ -43,7 +35,7 @@ const Home = ({ stats }) => {
 
     setTotalSteps(stepsToday);
 
-    
+    // Fetch total activity calories for today
     const activityLogs = JSON.parse(localStorage.getItem('loggedActivities')) || [];
     const caloriesToday = activityLogs
       .filter(log => log.date === today)
@@ -53,7 +45,7 @@ const Home = ({ stats }) => {
   }, []);
 
   useEffect(() => {
-    
+    // Fetch filtered activities for the selected date
     const storedActivities = JSON.parse(localStorage.getItem('loggedActivities')) || [];
     const fetchFilteredActivities = () => {
       const todayActivities = storedActivities.filter(activity => {

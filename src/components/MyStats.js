@@ -1,15 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect} from 'react';
 import { StatsContext } from '../StatsContext';
 
 const MyStats = () => {
   const { stats,updateStats } = useContext(StatsContext);
-  
-
-  
-
-  
-
-  useEffect(() => {
+   useEffect(() => {
     
     localStorage.setItem('userStats', JSON.stringify(stats));
   }, [stats]);

@@ -13,7 +13,9 @@ const ProgressBar = ({ totalSteps, totalActivityCalories }) => {
       
      
       const totalCalories = totalActivityCalories + (totalSteps * 0.04);
-      setTotalCaloriesBurned(totalCalories);  
+      if (totalCalories !== totalCaloriesBurned) {
+        setTotalCaloriesBurned(totalCalories);
+      }
      
 
       const startingWeight = stats.startingWeight || 0;
@@ -30,8 +32,11 @@ const ProgressBar = ({ totalSteps, totalActivityCalories }) => {
         weightPercentage = 100; 
       }
 
-      setWeightProgress(weightPercentage);
+      if (weightPercentage !== weightProgress) {
+        setWeightProgress(weightPercentage);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalSteps, totalActivityCalories, stats]);
 
   return (
